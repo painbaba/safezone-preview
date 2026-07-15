@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://safezone-preview.pages.dev/sitemap-index.xml
+Sitemap: https://checksafezone.com/sitemap-index.xml
