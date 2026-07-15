@@ -16,7 +16,6 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, 'https://checksafezone.com');
-const gaId = import.meta.env.PUBLIC_GA_ID || 'G-XXXXXXXXXX';
 ---
 
 <!DOCTYPE html>
@@ -77,16 +76,15 @@ const gaId = import.meta.env.PUBLIC_GA_ID || 'G-XXXXXXXXXX';
       window.localStorage.setItem('theme', theme);
     </script>
 
-    <!-- Google Analytics (GA4) -->
-    {gaId && (
-      <script type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-      <script type="text/partytown" define:vars={{ gaId }}>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', gaId);
-      </script>
-    )}
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S15MZ5G37F"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-S15MZ5G37F');
+    </script>
   </head>
   <body class="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 flex flex-col antialiased">
     <!-- Header -->
