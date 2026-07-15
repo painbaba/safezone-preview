@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Page Not Found" 
+  description="Oops! The page you are looking for does not exist on SafeZone Preview."
+>
+  <div class="flex-grow flex flex-col items-center justify-center px-4 py-16">
+    <div class="max-w-md w-full text-center space-y-8 bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-md border border-slate-150 dark:border-slate-800">
+      
+      <!-- Safe Zone Cutoff Mock Illustration -->
+      <div class="relative h-28 bg-slate-950 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-850 select-none">
+        <!-- Red Danger Zone Overlay indicating cutoff -->
+        <div class="absolute right-0 top-0 bottom-0 w-24 bg-red-500/20 border-l border-red-500/30 flex flex-col items-center justify-center text-red-300 font-bold text-[8px] leading-tight p-2">
+          <span>CUT OFF</span>
+          <span>ZONE</span>
+        </div>
+        
+        <div class="absolute left-4 top-4 text-xs font-bold text-slate-500 font-mono">
+          9:16 Aspect
+        </div>
+
+        <div class="text-center space-y-1">
+          <span class="text-4xl font-black text-indigo-500">404</span>
+          <span class="text-[8px] block font-bold uppercase tracking-wider text-slate-400 font-mono">Outside Safe Area</span>
+        </div>
+      </div>
+
+      <!-- Copy -->
+      <div class="space-y-2">
+        <h1 class="text-xl font-bold text-slate-900 dark:text-white">
+          Content Cut Off!
+        </h1>
+        <p class="text-xs text-slate-550 dark:text-slate-400 font-normal leading-relaxed">
+          The page you requested is outside the safe zone margins. We couldn't find anything at this coordinate.
+        </p>
+      </div>
+
+      <!-- Action -->
+      <div>
+        <a 
+          href="/" 
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-bold rounded-xl text-xs transition-all shadow-md"
+        >
+          <span>📱 Back to Safe Area</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

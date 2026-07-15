@@ -1,0 +1,281 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Structured JSON-LD Data for SEO
+const schemaJson = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Why Social Media Safe Zones Matter: The Complete 9:16 Video Guide",
+  "description": "Learn about TikTok Safe Zone, Instagram Reels Safe Area, and YouTube Shorts Safe Zone Templates. Understand how critical text or actions get cut off by platform UI overlays.",
+  "inLanguage": "en",
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "Content Creators, Video Editors, Social Media Marketers"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://safezone-preview.pages.dev/about"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "SafeZone Preview"
+  }
+});
+---
+
+<BaseLayout
+  title="Why Social Media Safe Zones Matter"
+  description="Learn about TikTok Safe Zone, Instagram Reels Safe Area, and YouTube Shorts Safe Zone Templates. Understand how critical text or actions get cut off by platform UI overlays."
+>
+  <article class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 space-y-16">
+    
+    <!-- Hero Section -->
+    <header class="text-center max-w-3xl mx-auto space-y-6">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50">
+        📚 Creator Resource Guide
+      </span>
+      <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl md:text-6xl leading-tight">
+        Why Social Media <span class="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">Safe Zones</span> Matter
+      </h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400 font-normal leading-relaxed">
+        If you have ever posted a vertical video only to realize your captions, subtitles, or crucial visual actions are hidden behind platform UI buttons or username overlays, you are not alone. Let's break down the mechanics of the 9:16 layout.
+      </p>
+    </header>
+
+    <!-- Visualizer / CSS Phone Mockups Section -->
+    <section class="space-y-8">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+          Visualizing the Core Platforms
+        </h2>
+        <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+          Hover over or view these responsive layout mockups. The red overlay zones show the "danger zones" where platform UI buttons and texts hide your content, while the green areas represent the true safe areas.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 pt-4">
+        
+        <!-- TikTok Safe Zone Mockup Card -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between space-y-6">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🎵</span>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white">TikTok Safe Zone</h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              TikTok features heavy overlays at the bottom (captions, username, sounds) and along the right edge (profile avatar, likes, comments, shares). Keep text centered to avoid cutoff.
+            </p>
+          </div>
+          
+          <!-- Phone mockup visualizer -->
+          <div class="relative w-full max-w-[200px] aspect-[9/16] bg-slate-950 rounded-[2rem] border-4 border-slate-800 dark:border-slate-800 shadow-lg mx-auto overflow-hidden text-[9px] text-white">
+            <!-- Top Overlay -->
+            <div class="absolute top-0 left-0 right-0 h-[12%] bg-red-500/20 border-b border-red-500/30 flex items-center justify-center font-semibold text-red-300">
+              Top Bar (150px)
+            </div>
+            <!-- Right Overlay -->
+            <div class="absolute top-[12%] right-0 bottom-[20%] w-[25%] bg-red-500/20 border-l border-red-500/30 flex flex-col items-center justify-center gap-2 text-red-300 font-semibold text-center leading-none p-1">
+              <span>Icons</span>
+              <span>(90px)</span>
+            </div>
+            <!-- Bottom Overlay -->
+            <div class="absolute bottom-0 left-0 right-0 h-[20%] bg-red-500/20 border-t border-red-500/30 flex items-center justify-center font-semibold text-red-300">
+              Captions / Audio (280px)
+            </div>
+            <!-- Safe Zone Center Area -->
+            <div class="absolute top-[12%] left-0 right-[25%] bottom-[20%] bg-emerald-500/10 border border-emerald-500/30 flex flex-col items-center justify-center text-center p-2">
+              <span class="font-bold text-emerald-400">SAFE AREA</span>
+              <span class="text-[7px] text-emerald-300/80">Place text here</span>
+            </div>
+          </div>
+
+          <div class="border-t border-slate-100 dark:border-slate-800 pt-4 text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
+            <p><strong>Top Buffer:</strong> ~150px (Search, Live feeds)</p>
+            <p><strong>Right Buffer:</strong> ~90px (Profile, Interactions)</p>
+            <p><strong>Bottom Buffer:</strong> ~280px (Creator Info, Sound text)</p>
+          </div>
+        </div>
+
+        <!-- Instagram Reels Safe Area Mockup Card -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between space-y-6">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">📸</span>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white">Instagram Reels Safe Area</h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              Instagram Reels places UI overlays similarly to TikTok but features a slightly taller header (direct camera link) and a 'Follow' label on the bottom left.
+            </p>
+          </div>
+          
+          <!-- Phone mockup visualizer -->
+          <div class="relative w-full max-w-[200px] aspect-[9/16] bg-slate-950 rounded-[2rem] border-4 border-slate-800 dark:border-slate-800 shadow-lg mx-auto overflow-hidden text-[9px] text-white">
+            <!-- Top Overlay -->
+            <div class="absolute top-0 left-0 right-0 h-[10%] bg-red-500/20 border-b border-red-500/30 flex items-center justify-center font-semibold text-red-300">
+              Header (120px)
+            </div>
+            <!-- Right Overlay -->
+            <div class="absolute top-[10%] right-0 bottom-[18%] w-[22%] bg-red-500/20 border-l border-red-500/30 flex flex-col items-center justify-center gap-2 text-red-300 font-semibold text-center leading-none p-1">
+              <span>Icons</span>
+              <span>(85px)</span>
+            </div>
+            <!-- Bottom Overlay -->
+            <div class="absolute bottom-0 left-0 right-0 h-[18%] bg-red-500/20 border-t border-red-500/30 flex items-center justify-center font-semibold text-red-300">
+              Captions (250px)
+            </div>
+            <!-- Safe Zone Center Area -->
+            <div class="absolute top-[10%] left-0 right-[22%] bottom-[18%] bg-emerald-500/10 border border-emerald-500/30 flex flex-col items-center justify-center text-center p-2">
+              <span class="font-bold text-emerald-400">SAFE AREA</span>
+              <span class="text-[7px] text-emerald-300/80">Place text here</span>
+            </div>
+          </div>
+
+          <div class="border-t border-slate-100 dark:border-slate-800 pt-4 text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
+            <p><strong>Top Buffer:</strong> ~120px (Camera Icon, Audio Track)</p>
+            <p><strong>Right Buffer:</strong> ~85px (Likes, Comments, Share, Menu)</p>
+            <p><strong>Bottom Buffer:</strong> ~250px (Caption box, Account ID)</p>
+          </div>
+        </div>
+
+        <!-- YouTube Shorts Safe Zone Template Mockup Card -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between space-y-6">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">📺</span>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white">YouTube Shorts Template</h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              YouTube Shorts features a highly obstructive HUD. The right-hand column sits wider, and the search icon/logo sits high on top, shrinking the safe zone even more.
+            </p>
+          </div>
+          
+          <!-- Phone mockup visualizer -->
+          <div class="relative w-full max-w-[200px] aspect-[9/16] bg-slate-950 rounded-[2rem] border-4 border-slate-800 dark:border-slate-800 shadow-lg mx-auto overflow-hidden text-[9px] text-white">
+            <!-- Top Overlay -->
+            <div class="absolute top-0 left-0 right-0 h-[10%] bg-red-500/20 border-b border-red-500/30 flex items-center justify-center font-semibold text-red-300">
+              Header (100px)
+            </div>
+            <!-- Right Overlay -->
+            <div class="absolute top-[10%] right-0 bottom-[16%] w-[26%] bg-red-500/20 border-l border-red-500/30 flex flex-col items-center justify-center gap-2 text-red-300 font-semibold text-center leading-none p-1">
+              <span>Shorts UI</span>
+              <span>(100px)</span>
+            </div>
+            <!-- Bottom Overlay -->
+            <div class="absolute bottom-0 left-0 right-0 h-[16%] bg-red-500/20 border-t border-red-500/30 flex items-center justify-center font-semibold text-red-300">
+              Details (220px)
+            </div>
+            <!-- Safe Zone Center Area -->
+            <div class="absolute top-[10%] left-0 right-[26%] bottom-[16%] bg-emerald-500/10 border border-emerald-500/30 flex flex-col items-center justify-center text-center p-2">
+              <span class="font-bold text-emerald-400">SAFE AREA</span>
+              <span class="text-[7px] text-emerald-300/80">Place text here</span>
+            </div>
+          </div>
+
+          <div class="border-t border-slate-100 dark:border-slate-800 pt-4 text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
+            <p><strong>Top Buffer:</strong> ~100px (Search, Menu trigger)</p>
+            <p><strong>Right Buffer:</strong> ~100px (Likes, Dislikes, Remix, Profile)</p>
+            <p><strong>Bottom Buffer:</strong> ~220px (Channel, Captions, Sound track)</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Deep Dive Guide Content -->
+    <section class="grid md:grid-cols-3 gap-12 pt-8">
+      
+      <!-- Left 2 Columns: Detailed Explanation -->
+      <div class="md:col-span-2 space-y-8 text-slate-700 dark:text-slate-300">
+        <div class="space-y-4">
+          <h2 class="text-3xl font-bold text-slate-900 dark:text-white">
+            Understanding Platform Layout Guidelines
+          </h2>
+          <p class="leading-relaxed">
+            When you export a standard 1080x1920 video, you have 2,073,600 pixels to play with. But in reality, less than 60% of that space is guaranteed to be unobstructed on every viewer's device. Each social media app adds interactive buttons (Likes, Comments, Shares, Remixes) and creator info cards directly on top of your video viewport.
+          </p>
+          <p class="leading-relaxed">
+            By utilizing a target <strong>TikTok Safe Zone</strong> or an <strong>Instagram Reels Safe Area</strong> layout, you ensure your visual accents are fully readable. If you overlook these rules, you risk critical call-to-actions (CTAs) being covered, reducing click-through rates and lowering overall platform engagement.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <h3 class="text-2xl font-bold text-slate-900 dark:text-white">
+            What Happens to Text Placed Outside the Safe Areas?
+          </h3>
+          <p class="leading-relaxed">
+            If text, graphics, or stickers are positioned too close to the screen edges, they will likely encounter three main obstacles:
+          </p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>
+              <strong>Cutoff by UI Buttons:</strong> The right margin contains interactive icons for liking, commenting, and sharing. Text placed here gets directly hidden behind those semi-transparent platform overlays.
+            </li>
+            <li>
+              <strong>Covered by Caption Overlay:</strong> The bottom fifth of the viewport houses account details, descriptions, hashtags, and sound tracks. TikTok, Reels, and YouTube Shorts will truncate text underneath these details.
+            </li>
+            <li>
+              <strong>Aspect Ratio Scaling:</strong> On devices with wider aspect ratios (like older iPhones or tablets), the sides of vertical videos are often cropped or black bars are added. Placing content on the absolute edges makes it vulnerable to these device-specific cropping factors.
+            </li>
+          </ul>
+        </div>
+
+        <div class="space-y-4">
+          <h3 class="text-2xl font-bold text-slate-900 dark:text-white">
+            Using a YouTube Shorts Safe Zone Template
+          </h3>
+          <p class="leading-relaxed">
+            YouTube Shorts presents a unique design hurdle. The interaction row on the right is wider than TikTok's, and the channel subscriber button and sound thumbnail block a significant amount of horizontal real estate at the bottom.
+          </p>
+          <p class="leading-relaxed">
+            A proper <strong>YouTube Shorts Safe Zone Template</strong> restricts the safe margins to a <em>740x1420 px</em> window centered horizontally. By keeping dynamic graphics inside these dimensions, you ensure your content looks polished on iOS, Android, and desktop Web versions of YouTube Shorts.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right 1 Column: Creator Tips & Best Practices Sidebar -->
+      <div class="space-y-6">
+        <div class="bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/50 rounded-3xl p-6 space-y-6">
+          <h3 class="text-lg font-bold text-indigo-900 dark:text-indigo-300">
+            💡 Creator Safety Rules
+          </h3>
+          
+          <ul class="space-y-4 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+            <li class="flex items-start gap-2">
+              <span class="text-indigo-500 font-bold">1.</span>
+              <span><strong>The Rule of 20%:</strong> Never place critical captions or labels in the top 15% or bottom 20% of your video grid. This is universal across TikTok, Reels, and Shorts.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-indigo-500 font-bold">2.</span>
+              <span><strong>Avoid the Right 25%:</strong> Keep all dynamic call-outs and captions shifted slightly to the left, away from the interaction panel (like/comment buttons).</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-indigo-500 font-bold">3.</span>
+              <span><strong>Use Clean Background Blocks:</strong> If your video has high color contrast, add a dark outline, shadow, or container box around your subtitles to keep them readable behind white platform icons.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-indigo-500 font-bold">4.</span>
+              <span><strong>Preview with Local Mockups:</strong> Instead of uploading, testing, deleting, and re-uploading to the live platforms, load your raw file directly into <a href="/" class="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">SafeZone Preview</a> to instantly see your layout limits.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 text-center space-y-4">
+          <h4 class="font-bold text-slate-900 dark:text-white text-sm">Ready to Test Your Videos?</h4>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Drag and drop your MP4 files or PNG designs to test safety overlaps in real-time.
+          </p>
+          <a
+            href="/"
+            class="inline-block w-full py-2.5 px-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl text-xs font-semibold shadow-md shadow-indigo-500/10 hover:scale-[1.02] active:scale-[0.98] transition-all"
+          >
+            Start Testing Now
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+  </article>
+
+  <!-- JSON-LD Structured Schema script tag -->
+  <script type="application/ld+json" set:html={schemaJson}></script>
+</BaseLayout>

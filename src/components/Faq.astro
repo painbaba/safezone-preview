@@ -1,0 +1,118 @@
+---
+// Faq.astro - Interactive FAQ component with Schema Markup for SafeZone Preview
+const faqs = [
+  {
+    q: "What is a social media safe zone?",
+    a: "A social media safe zone is the area of a vertical 9:16 video or image that remains visible and unobscured by user interface overlays (such as the like button, comments, share icon, channel profile, and captions). Designing within the safe area ensures your critical graphics, titles, and text remain legible for all users."
+  },
+  {
+    q: "What are the exact dimensions of a TikTok safe zone?",
+    a: "A standard TikTok video has a 9:16 aspect ratio (usually 1080x1920 pixels). The TikTok safe area leaves a margin of 150px at the top (profile & search bars), 280px at the bottom (creator handle, captions, sound tracker), and 90px on the right side (likes, comment count, share indicators). Keep all text in the safe center region."
+  },
+  {
+    q: "How does the side-by-side comparison tool help?",
+    a: "The Side-by-Side compare tool is our key advantage. By uploading a single vertical video or overlay PNG, you can preview how it looks simultaneously on TikTok, Instagram Reels, and YouTube Shorts. This saves hours of manual checking and ensures cross-platform consistency in one click."
+  },
+  {
+    q: "Are my uploaded videos safe and private?",
+    a: "Yes. SafeZone Preview operates 100% on the client side. When you select a video or image, we utilize local browser memory (`URL.createObjectURL`) to render the media inside your browser. No files are uploaded to any server. Your videos remain completely private on your machine."
+  },
+  {
+    q: "Why are YouTube Shorts and Instagram Reels safe areas different?",
+    a: "Each social platform places its action icons and titles in different margins. For example, Instagram Reels features a 'Follow' action button on the left, while YouTube Shorts features a wider right-side layout that blocks more space. Using our template overlays helps you spot these differences easily."
+  }
+];
+
+// Generate JSON-LD Schema markup for Google Rich Results
+const schemaJson = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a
+    }
+  }))
+});
+---
+
+<section class="w-full max-w-4xl mx-auto px-4 py-12">
+  <div class="text-center mb-10">
+    <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
+      Frequently Asked Questions
+    </h2>
+    <p class="mt-3 text-lg text-slate-500 dark:text-slate-400">
+      Understand how vertical layout constraints impact viewer engagement and platform reach.
+    </p>
+  </div>
+
+  <!-- FAQ Accordion Layout -->
+  <div class="space-y-4">
+    {faqs.map((faq, index) => (
+      <div class="border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 overflow-hidden transition-all duration-200">
+        <button
+          type="button"
+          class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left text-base font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800/55 transition-colors focus:outline-none"
+          aria-expanded="false"
+          aria-controls={`faq-answer-${index}`}
+        >
+          <span>{faq.q}</span>
+          <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 transition-transform">
+            <svg class="h-4 w-4 transform transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
+        </button>
+        <div
+          id={`faq-answer-${index}`}
+          class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out"
+          role="region"
+        >
+          <div class="px-6 pb-5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            {faq.a}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- JSON-LD structured data for SEO -->
+  <script type="application/ld+json" set:html={schemaJson}></script>
+</section>
+
+<script>
+  // Accordion Logic
+  const triggers = document.querySelectorAll('.faq-trigger');
+
+  triggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+      const content = trigger.parentElement?.querySelector('.faq-content') as HTMLElement;
+      const icon = trigger.querySelector('svg');
+
+      // Close all other FAQs
+      triggers.forEach(otherTrigger => {
+        if (otherTrigger !== trigger) {
+          otherTrigger.setAttribute('aria-expanded', 'false');
+          const otherContent = otherTrigger.parentElement?.querySelector('.faq-content') as HTMLElement;
+          const otherIcon = otherTrigger.querySelector('svg');
+          if (otherContent) otherContent.style.maxHeight = '0px';
+          otherIcon?.classList.remove('rotate-180');
+        }
+      });
+
+      // Toggle current FAQ
+      if (isExpanded) {
+        trigger.setAttribute('aria-expanded', 'false');
+        if (content) content.style.maxHeight = '0px';
+        icon?.classList.remove('rotate-180');
+      } else {
+        trigger.setAttribute('aria-expanded', 'true');
+        if (content) content.style.maxHeight = `${content.scrollHeight}px`;
+        icon?.classList.add('rotate-180');
+      }
+    });
+  });
+</script>

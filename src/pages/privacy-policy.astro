@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Structured JSON-LD Data for the Privacy Policy page
+const schemaJson = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Privacy Policy - SafeZone Preview",
+  "description": "Read our GDPR and CCPA compliant Privacy Policy for SafeZone Preview. Learn how we handle media uploads locally without server-side storage.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "SafeZone Preview"
+  },
+  "mainEntity": {
+    "@type": "CreativeWork",
+    "name": "SafeZone Preview Privacy Policy",
+    "datePublished": "2026-07-15",
+    "text": "This privacy policy explains how SafeZone Preview processes user data. Our primary philosophy is zero-server data storage. All file uploads stay completely in the user's browser."
+  }
+});
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="Read our GDPR and CCPA compliant Privacy Policy for SafeZone Preview. Learn how we handle media uploads locally without server-side storage."
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <article class="prose prose-slate dark:prose-invert max-w-none space-y-8">
+      
+      <!-- Page Header -->
+      <header class="border-b border-slate-200 dark:border-slate-800 pb-8 space-y-4">
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-200 border border-slate-200 dark:border-slate-800">
+          ⚖️ Legal & Privacy
+        </span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          Privacy Policy
+        </h1>
+        <p class="text-sm text-slate-500 dark:text-slate-400 font-normal">
+          Last updated: <strong>July 15, 2026</strong>
+        </p>
+      </header>
+
+      <!-- Policy Content -->
+      <div class="space-y-6 text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
+        <p>
+          At <strong>SafeZone Preview</strong>, accessible from <a href="/" class="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">safezone-preview.pages.dev</a>, one of our main priorities is the privacy of our visitors. This Privacy Policy document outlines the types of information we do and do not collect, and how we handle media assets.
+        </p>
+        
+        <div class="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/50 rounded-2xl p-5 space-y-2">
+          <h2 class="text-lg font-bold text-emerald-900 dark:text-emerald-300 flex items-center gap-2">
+            🛡️ Our 100% Client-Side Privacy Guarantee
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+            Unlike online converters or editor tools, SafeZone Preview <strong>never uploads your images, vertical videos, or designs to any server</strong>. We utilize standard browser memory APIs (specifically, <code>URL.createObjectURL</code>) to load your files locally in your browser sandbox. All rendering, timing, playback, and overlay visual testing happen instantly on your machine.
+          </p>
+        </div>
+
+        <section class="space-y-3">
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white pt-4">
+            1. GDPR & CCPA Compliance Summary
+          </h2>
+          <p>
+            Under the European General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA), users have the right to request access to, deletion of, or restriction of their personal information.
+          </p>
+          <p>
+            Because we do not store, process, or transmit your media files to any backend servers, we do not possess any of your custom creative materials. Your uploads cannot be leaked, accessed, or shared with third parties, as they never leave your physical device.
+          </p>
+        </section>
+
+        <section class="space-y-3">
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white pt-4">
+            2. Local Storage and Preferences
+          </h2>
+          <p>
+            We use the browser's <code>localStorage</code> API to store your preferences. Specifically, we store a single entry to persist your chosen aesthetic interface style:
+          </p>
+          <ul class="list-disc pl-6 space-y-1">
+            <li><code>theme</code>: Used to remember whether you selected Light Mode or Dark Mode.</li>
+          </ul>
+          <p>
+            You can clear your browser storage at any time to remove these local settings. We do not use persistent database storage or track cookies containing personally identifying data.
+          </p>
+        </section>
+
+        <section class="space-y-3">
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white pt-4">
+            3. Analytics and Advertising Cookie Disclosures
+          </h2>
+          <p>
+            To help analyze site traffic and improve performance, SafeZone Preview implements basic standard analytics integrations.
+          </p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>
+              <strong>Google Analytics (GA4):</strong> We track anonymous user engagement metrics (such as page views, device types, and buttons clicked) using Google Analytics. These scripts run via client-side libraries. These third-party services may write cookies to your browser to identify repeat sessions, but no raw video data or design uploads are ever linked to analytics trackers.
+            </li>
+            <li>
+              <strong>Advertising Partners:</strong> If or when we implement advertising services (like Google AdSense) to keep this tool free, those networks may use cookies, Web Beacons, or similar technologies to measure the effectiveness of advertisements or personalize the ad experience based on your browsing interests.
+            </li>
+          </ul>
+          <p>
+            You can choose to disable or block cookies through your individual browser options or by using privacy extensions.
+          </p>
+        </section>
+
+        <section class="space-y-3">
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white pt-4">
+            4. Consent
+          </h2>
+          <p>
+            By using our website, you hereby consent to our Privacy Policy and agree to its terms. If you do not agree with the terms outlined here, please feel free to clear your browser data and discontinue using the site.
+          </p>
+        </section>
+
+        <section class="space-y-3 border-t border-slate-200 dark:border-slate-800 pt-6">
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white">
+            5. Contact Information
+          </h2>
+          <p>
+            If you have questions, inquiries, or feedback regarding our privacy practices, please contact us via email at: 
+            <a href="mailto:privacy@safezone-preview.pages.dev" class="text-indigo-600 dark:text-indigo-400 hover:underline">
+              privacy@safezone-preview.pages.dev
+            </a>.
+          </p>
+        </section>
+      </div>
+
+    </article>
+  </div>
+
+  <!-- JSON-LD Structured Schema script tag -->
+  <script type="application/ld+json" set:html={schemaJson}></script>
+</BaseLayout>

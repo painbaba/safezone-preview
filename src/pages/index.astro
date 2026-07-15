@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SafeZonePreview from '../components/SafeZonePreview.astro';
+import Faq from '../components/Faq.astro';
+---
+
+<BaseLayout
+  title="SafeZone Preview | Free TikTok Safe Zone & Social Media Checker"
+  description="Instant vertical video previewer for TikTok Safe Zone, Instagram Reels Safe Area, and YouTube Shorts Safe Zone Templates. Check text overlays and avoid cutoff."
+>
+  <!-- Hero Section with SEO Content -->
+  <section class="text-center pt-12 pb-6 px-4 bg-gradient-to-b from-indigo-50/20 to-transparent dark:from-indigo-950/10">
+    <div class="max-w-4xl mx-auto space-y-4">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50 mb-2">
+        ⚡ 100% Client-Side Safe Area Testing
+      </span>
+      <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl md:text-6xl">
+        Social Media <span class="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">SafeZone Preview</span>
+      </h1>
+      
+      <!-- SEO Paragraph incorporating target keywords -->
+      <p class="max-w-2xl mx-auto text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
+        Ensure your vertical 9:16 content is perfectly framed with our <strong>Social Media Safe Zone Checker</strong>. Instantly preview how text overlays or graphics will look against the actual <strong>TikTok Safe Zone</strong> margins, the <strong>Instagram Reels Safe Area</strong> interface, and a <strong>YouTube Shorts Safe Zone Template</strong>. Use this tool locally to inspect layout bounds before exporting, avoiding the need to download a transparent <strong>TikTok Overlay PNG</strong> or static template.
+      </p>
+    </div>
+  </section>
+
+  <!-- Interactive Checker Tool -->
+  <SafeZonePreview />
+
+  <!-- Features List Grid -->
+  <section class="max-w-5xl mx-auto px-4 py-12">
+    <div class="bg-white dark:bg-slate-900 border border-slate-150 dark:border-slate-800 rounded-3xl p-8 sm:p-10 shadow-sm space-y-8">
+      <div>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">
+          Why Vertical Video Creators Need SafeZone Preview
+        </h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 font-normal">
+          Each social platform puts buttons, profile details, and sound bars directly on top of your video. If you place text too close to the edges, it gets cut off.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 pt-4 border-t border-slate-100 dark:border-slate-800">
+        <!-- Feature 1 -->
+        <div class="space-y-2">
+          <div class="text-xl">🎦</div>
+          <h3 class="font-bold text-slate-900 dark:text-white text-base">Local File Processing</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
+            No server uploads mean maximum speed and absolute privacy. Your raw vertical video files stay inside your local web browser sandbox.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="space-y-2">
+          <div class="text-xl">🔀</div>
+          <h3 class="font-bold text-slate-900 dark:text-white text-base">Multi-Platform Sync</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
+            Check TikTok, Instagram Reels, and YouTube Shorts simultaneously using the compare panel. Sync play/pause across all three viewports automatically.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="space-y-2">
+          <div class="text-xl">📐</div>
+          <h3 class="font-bold text-slate-900 dark:text-white text-base">Dynamic CSS Guidelines</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
+            Toggle specific layout elements on/off or toggle grid boundaries to see exactly where graphics can be safely placed.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <Faq />
+</BaseLayout>

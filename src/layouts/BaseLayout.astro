@@ -1,0 +1,188 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogType?: string;
+}
+
+const { 
+  title, 
+  description, 
+  ogImage = '/og-image.png', 
+  ogType = 'website' 
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, 'https://safezone-preview.pages.dev');
+const gaId = import.meta.env.PUBLIC_GA_ID || 'G-XXXXXXXXXX';
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Canonical URL to avoid duplicate content on pages.dev -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title} | SafeZone Preview</title>
+    <meta name="title" content={`${title} | SafeZone Preview`} />
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={`${title} | SafeZone Preview`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, canonicalURL)} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={`${title} | SafeZone Preview`} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(ogImage, canonicalURL)} />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Inline script to run immediately and avoid flash of unstyled theme (FOUC) -->
+    <script is:inline>
+      const getTheme = () => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      };
+      
+      const theme = getTheme();
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      window.localStorage.setItem('theme', theme);
+    </script>
+
+    <!-- Google Analytics (GA4) -->
+    {gaId && (
+      <script type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+      <script type="text/partytown" define:vars={{ gaId }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gaId);
+      </script>
+    )}
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 flex flex-col antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-950/80">
+      <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2 group">
+          <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-bold shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+            📱
+          </span>
+          <span class="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent dark:from-white dark:to-slate-300">
+            SafeZone Preview
+          </span>
+        </a>
+
+        <!-- Navigation & Actions -->
+        <nav class="flex items-center gap-6">
+          <ul class="hidden md:flex gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+            <li>
+              <a href="/" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Home Checker</a>
+            </li>
+            <li>
+              <a href="/about" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Why Safe Zones Matter</a>
+            </li>
+          </ul>
+
+          <div class="flex items-center gap-4">
+            <!-- Theme Toggle Button -->
+            <button
+              id="theme-toggle"
+              type="button"
+              aria-label="Toggle theme"
+              class="relative rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+            >
+              <!-- Sun Icon -->
+              <svg id="theme-toggle-light-icon" class="hidden h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+              </svg>
+              <!-- Moon Icon -->
+              <svg id="theme-toggle-dark-icon" class="hidden h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-slate-200 bg-white dark:border-slate-900 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
+          <div class="flex items-center gap-2">
+            <span class="text-sm text-slate-500 dark:text-slate-400">
+              © {new Date().getFullYear()} SafeZone Preview. All rights reserved.
+            </span>
+          </div>
+          <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-slate-500 dark:text-slate-400">
+            <a href="/" class="hover:text-slate-900 dark:hover:text-white transition-colors">Home</a>
+            <a href="/about" class="hover:text-slate-900 dark:hover:text-white transition-colors">Why Safe Zones Matter</a>
+            <a href="/privacy-policy" class="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Theme toggle logic -->
+    <script>
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const darkIcon = document.getElementById('theme-toggle-dark-icon');
+      const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+      const updateIcons = (theme: string) => {
+        if (theme === 'dark') {
+          lightIcon?.classList.remove('hidden');
+          darkIcon?.classList.add('hidden');
+        } else {
+          darkIcon?.classList.remove('hidden');
+          lightIcon?.classList.add('hidden');
+        }
+      };
+
+      // Set initial icon states
+      const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      updateIcons(currentTheme);
+
+      themeToggleBtn?.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        const newTheme = isDark ? 'dark' : 'light';
+        localStorage.setItem('theme', newTheme);
+        updateIcons(newTheme);
+      });
+    </script>
+  </body>
+</html>

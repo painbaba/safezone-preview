@@ -1,0 +1,670 @@
+---
+// SafeZonePreview.astro - Interactive Platform Safe Zone Previewer
+---
+
+<div class="w-full max-w-7xl mx-auto px-4 py-8">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- Controls Panel (Left on Desktop, 4 Columns) -->
+    <div class="lg:col-span-4 space-y-6 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-150 dark:border-slate-800 shadow-sm">
+      
+      <!-- Upload Section -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
+          1. Upload Content
+        </h3>
+        <label 
+          id="dropzone"
+          class="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-400 rounded-2xl p-6 cursor-pointer bg-slate-50 dark:bg-slate-950 transition-colors group"
+        >
+          <div class="text-center space-y-2">
+            <span class="text-3xl block group-hover:scale-110 transition-transform">📤</span>
+            <span class="text-sm font-semibold text-slate-700 dark:text-slate-350 block">Select Video or Image</span>
+            <span class="text-xs text-slate-400 dark:text-slate-500 block">MP4, MOV, PNG, JPG (9:16 Recommended)</span>
+          </div>
+          <input 
+            type="file" 
+            id="file-input" 
+            accept="video/mp4,video/quicktime,image/png,image/jpeg" 
+            class="hidden" 
+          />
+        </label>
+        
+        <!-- Active Media Info -->
+        <div id="media-info" class="mt-3 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 hidden">
+          <span class="truncate max-w-[200px]" id="media-filename">placeholder.mp4</span>
+          <button id="btn-remove-media" class="text-red-500 hover:underline font-semibold">
+            Remove
+          </button>
+        </div>
+      </div>
+
+      <!-- Platform Selection -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
+          2. Platform Safe Zone
+        </h3>
+        <div class="grid grid-cols-2 gap-2" id="platform-selector">
+          <button 
+            type="button" 
+            data-platform="tiktok" 
+            class="py-2.5 px-3 rounded-xl border-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-400 text-xs font-semibold flex flex-col items-center gap-1 transition-all"
+          >
+            <span>🎵 TikTok</span>
+          </button>
+          <button 
+            type="button" 
+            data-platform="reels" 
+            class="py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold flex flex-col items-center gap-1 transition-all"
+          >
+            <span>📸 IG Reels</span>
+          </button>
+          <button 
+            type="button" 
+            data-platform="shorts" 
+            class="py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold flex flex-col items-center gap-1 transition-all"
+          >
+            <span>📹 YT Shorts</span>
+          </button>
+          <button 
+            type="button" 
+            data-platform="all" 
+            class="py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold flex flex-col items-center gap-1 transition-all"
+          >
+            <span>⚡ Compare All</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Video Control Bar (only active when video is loaded) -->
+      <div id="video-controls" class="border-t border-slate-100 dark:border-slate-850 pt-4 hidden">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
+          Media Controls
+        </h3>
+        <div class="flex items-center gap-3">
+          <button 
+            type="button" 
+            id="btn-play-pause"
+            class="h-9 w-9 flex items-center justify-center rounded-lg bg-indigo-600 text-white dark:bg-indigo-500 font-bold hover:scale-105 transition-transform"
+          >
+            ▶
+          </button>
+          <input 
+            type="range" 
+            id="video-scrubber" 
+            min="0" 
+            max="100" 
+            value="0" 
+            class="flex-grow accent-indigo-600 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-800" 
+          />
+          <button 
+            type="button" 
+            id="btn-mute"
+            class="h-9 w-9 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-250 dark:hover:bg-slate-700 text-sm"
+          >
+            🔊
+          </button>
+        </div>
+      </div>
+
+      <!-- Visibility Toggle Filters -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
+          3. Toggle Elements
+        </h3>
+        <div class="space-y-3">
+          <label class="flex items-center gap-3 cursor-pointer group text-sm font-semibold text-slate-700 dark:text-slate-300 select-none">
+            <input type="checkbox" id="toggle-right-icons" checked class="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-indigo-500" />
+            <span>Right-side Icons (Likes/Share)</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer group text-sm font-semibold text-slate-700 dark:text-slate-300 select-none">
+            <input type="checkbox" id="toggle-bottom-caption" checked class="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-indigo-500" />
+            <span>Bottom Caption & Handle</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer group text-sm font-semibold text-slate-700 dark:text-slate-300 select-none">
+            <input type="checkbox" id="toggle-top-nav" checked class="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-indigo-500" />
+            <span>Top Profile / Navigation</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer group text-sm font-semibold text-slate-700 dark:text-slate-300 select-none">
+            <input type="checkbox" id="toggle-guidelines" checked class="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-indigo-500" />
+            <span class="text-indigo-600 dark:text-indigo-400">Show Safe Area Bounds 📐</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Preview Container (Right on Desktop, 8 Columns) -->
+    <div class="lg:col-span-8 flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-950/60 p-6 sm:p-10 rounded-3xl border border-slate-150 dark:border-slate-900 shadow-inner min-h-[500px]">
+      
+      <!-- Preview Mode Viewports -->
+      <div id="preview-grid" class="flex flex-wrap justify-center gap-8 w-full transition-all duration-300">
+        
+        <!-- Platform Frame (We will dynamically hide/show / clone these based on grid compare vs single view) -->
+        
+        <!-- TikTok Preview Frame -->
+        <div id="frame-tiktok" class="preview-frame w-full max-w-[320px] aspect-[9/16] relative bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-950 dark:border-slate-800 flex items-center justify-center shrink-0">
+          
+          <!-- Media Target (Video or Image) -->
+          <video class="media-video w-full h-full object-cover pointer-events-none" loop muted playsinline></video>
+          <img class="media-image w-full h-full object-cover hidden pointer-events-none" />
+          
+          <!-- Local File Placeholder (if empty) -->
+          <div class="media-placeholder absolute inset-0 flex flex-col items-center justify-center bg-slate-950 text-slate-400 p-6 text-center">
+            <span class="text-4xl mb-3">📁</span>
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">No Video Uploaded</p>
+            <p class="text-[10px] text-slate-600">Upload a 9:16 clip on the left to start checking</p>
+          </div>
+
+          <!-- DYNAMIC OVERLAYS -->
+          <div class="absolute inset-0 pointer-events-none text-white font-sans text-xs">
+            
+            <!-- Safe Zone Guide Box -->
+            <div class="overlay-guideline absolute border-2 border-dashed border-red-500/80 inset-y-16 inset-x-8 rounded-lg flex items-center justify-center">
+              <span class="bg-red-500 text-white font-mono text-[8px] uppercase tracking-wider px-1 py-0.5 rounded absolute top-2 left-2">TikTok Safe Area</span>
+            </div>
+
+            <!-- Top Navigation -->
+            <div class="overlay-top absolute top-0 inset-x-0 pt-4 px-4 flex justify-between items-center bg-gradient-to-b from-black/50 to-transparent">
+              <span class="text-sm">⚙️</span>
+              <div class="flex gap-3 font-semibold text-sm opacity-90">
+                <span>Following</span>
+                <span class="border-b-2 border-white pb-0.5">For You</span>
+              </div>
+              <span class="text-sm">🔍</span>
+            </div>
+
+            <!-- Right-side Interaction Icons -->
+            <div class="overlay-right absolute right-2 bottom-24 flex flex-col items-center gap-4">
+              <!-- Profile Pic -->
+              <div class="relative mb-2">
+                <div class="h-10 w-10 rounded-full border border-white bg-slate-700 flex items-center justify-center text-sm">👤</div>
+                <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-red-500 text-[8px] font-bold px-1 rounded-full">+</div>
+              </div>
+              <!-- Like -->
+              <div class="flex flex-col items-center">
+                <span class="text-2xl">❤️</span>
+                <span class="text-[9px] mt-0.5 font-semibold">1.2M</span>
+              </div>
+              <!-- Comment -->
+              <div class="flex flex-col items-center">
+                <span class="text-2xl">💬</span>
+                <span class="text-[9px] mt-0.5 font-semibold">45.2K</span>
+              </div>
+              <!-- Bookmark -->
+              <div class="flex flex-col items-center">
+                <span class="text-2xl">⭐</span>
+                <span class="text-[9px] mt-0.5 font-semibold">189.1K</span>
+              </div>
+              <!-- Share -->
+              <div class="flex flex-col items-center">
+                <span class="text-2xl">➡️</span>
+                <span class="text-[9px] mt-0.5 font-semibold">12.8K</span>
+              </div>
+              <!-- Sound Rotation -->
+              <div class="h-8 w-8 rounded-full border border-slate-700 bg-slate-900 flex items-center justify-center mt-2 animate-spin-slow">🎵</div>
+            </div>
+
+            <!-- Bottom Description & Music -->
+            <div class="overlay-bottom absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/60 via-black/20 to-transparent space-y-2">
+              <div class="font-bold text-sm">@creator_handle</div>
+              <div class="leading-snug opacity-90 font-normal line-clamp-3">
+                This is a sample video caption. Keep your essential vertical text and calls-to-action out of these highlighted overlay margins to ensure TikTok users can read them clearly! #socialmedia #safezone
+              </div>
+              <div class="flex items-center gap-1.5 opacity-80 text-[10px]">
+                <span>🎵</span>
+                <span class="truncate max-w-[150px]">Original Sound - @creator_handle</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Label Indicator -->
+          <div class="absolute top-2 left-2 px-2 py-1 rounded bg-black/85 text-[10px] font-black text-white tracking-widest border border-white/10 uppercase select-none pointer-events-none">
+            TikTok Mock
+          </div>
+        </div>
+
+        <!-- Instagram Reels Preview Frame -->
+        <div id="frame-reels" class="preview-frame w-full max-w-[320px] aspect-[9/16] relative bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-950 dark:border-slate-800 flex items-center justify-center shrink-0">
+          
+          <!-- Media Target (Video or Image) -->
+          <video class="media-video w-full h-full object-cover pointer-events-none" loop muted playsinline></video>
+          <img class="media-image w-full h-full object-cover hidden pointer-events-none" />
+          
+          <!-- Local File Placeholder (if empty) -->
+          <div class="media-placeholder absolute inset-0 flex flex-col items-center justify-center bg-slate-950 text-slate-400 p-6 text-center">
+            <span class="text-4xl mb-3">📁</span>
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">No Video Uploaded</p>
+            <p class="text-[10px] text-slate-600">Upload a 9:16 clip on the left to start checking</p>
+          </div>
+
+          <!-- DYNAMIC OVERLAYS -->
+          <div class="absolute inset-0 pointer-events-none text-white font-sans text-xs">
+            
+            <!-- Safe Zone Guide Box -->
+            <div class="overlay-guideline absolute border-2 border-dashed border-red-500/80 inset-y-20 inset-x-8 rounded-lg flex items-center justify-center">
+              <span class="bg-red-500 text-white font-mono text-[8px] uppercase tracking-wider px-1 py-0.5 rounded absolute top-2 left-2">Instagram Reels Safe Area</span>
+            </div>
+
+            <!-- Top Navigation -->
+            <div class="overlay-top absolute top-0 inset-x-0 pt-4 px-4 flex justify-between items-center bg-gradient-to-b from-black/50 to-transparent">
+              <span class="text-sm font-bold">Reels</span>
+              <span class="text-sm">📷</span>
+            </div>
+
+            <!-- Right-side Interaction Icons -->
+            <div class="overlay-right absolute right-2 bottom-16 flex flex-col items-center gap-5">
+              <!-- Like -->
+              <div class="flex flex-col items-center">
+                <span class="text-xl">🤍</span>
+                <span class="text-[9px] mt-0.5 font-semibold">120K</span>
+              </div>
+              <!-- Comment -->
+              <div class="flex flex-col items-center">
+                <span class="text-xl">💬</span>
+                <span class="text-[9px] mt-0.5 font-semibold">891</span>
+              </div>
+              <!-- Direct Message -->
+              <div class="flex flex-col items-center">
+                <span class="text-xl">✈️</span>
+                <span class="text-[9px] mt-0.5 font-semibold">3.4K</span>
+              </div>
+              <!-- More Options -->
+              <span class="text-xl">⋮</span>
+              <!-- Audio Icon -->
+              <div class="h-6 w-6 rounded border border-white/50 bg-slate-900 flex items-center justify-center">🎵</div>
+            </div>
+
+            <!-- Bottom Description -->
+            <div class="overlay-bottom absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/60 via-black/20 to-transparent space-y-2">
+              <div class="flex items-center gap-2">
+                <div class="h-6 w-6 rounded-full bg-slate-700 flex items-center justify-center text-[10px]">👤</div>
+                <span class="font-bold text-xs">@reels_creator</span>
+                <span class="px-2 py-0.5 border border-white/60 rounded text-[9px] font-bold">Follow</span>
+              </div>
+              <div class="leading-snug opacity-95 font-normal line-clamp-2">
+                This is a Reels caption layout. IG overlay includes the follow button next to username. Check guidelines to make sure actions or key text aren't cut off by likes.
+              </div>
+              <div class="flex items-center gap-1.5 opacity-80 text-[10px]">
+                <span>🎵</span>
+                <span class="truncate max-w-[150px]">reels_creator • Original Audio</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Label Indicator -->
+          <div class="absolute top-2 left-2 px-2 py-1 rounded bg-black/85 text-[10px] font-black text-white tracking-widest border border-white/10 uppercase select-none pointer-events-none">
+            Instagram Reels Mock
+          </div>
+        </div>
+
+        <!-- YouTube Shorts Preview Frame -->
+        <div id="frame-shorts" class="preview-frame w-full max-w-[320px] aspect-[9/16] relative bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-950 dark:border-slate-800 flex items-center justify-center shrink-0">
+          
+          <!-- Media Target (Video or Image) -->
+          <video class="media-video w-full h-full object-cover pointer-events-none" loop muted playsinline></video>
+          <img class="media-image w-full h-full object-cover hidden pointer-events-none" />
+          
+          <!-- Local File Placeholder (if empty) -->
+          <div class="media-placeholder absolute inset-0 flex flex-col items-center justify-center bg-slate-950 text-slate-400 p-6 text-center">
+            <span class="text-4xl mb-3">📁</span>
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">No Video Uploaded</p>
+            <p class="text-[10px] text-slate-600">Upload a 9:16 clip on the left to start checking</p>
+          </div>
+
+          <!-- DYNAMIC OVERLAYS -->
+          <div class="absolute inset-0 pointer-events-none text-white font-sans text-xs">
+            
+            <!-- Safe Zone Guide Box -->
+            <div class="overlay-guideline absolute border-2 border-dashed border-red-500/80 inset-y-16 inset-x-12 rounded-lg flex items-center justify-center">
+              <span class="bg-red-500 text-white font-mono text-[8px] uppercase tracking-wider px-1 py-0.5 rounded absolute top-2 left-2">Shorts Safe Area</span>
+            </div>
+
+            <!-- Top Navigation -->
+            <div class="overlay-top absolute top-0 inset-x-0 pt-4 px-4 flex justify-between items-center bg-gradient-to-b from-black/50 to-transparent">
+              <span class="text-sm font-bold">YouTube Shorts</span>
+              <div class="flex gap-4">
+                <span>🔍</span>
+                <span>⋮</span>
+              </div>
+            </div>
+
+            <!-- Right-side Interaction Icons (YT Shorts uses a slightly larger margin/layout offset) -->
+            <div class="overlay-right absolute right-2 bottom-12 flex flex-col items-center gap-4">
+              <!-- Thumbs Up -->
+              <div class="flex flex-col items-center">
+                <span class="text-xl">👍</span>
+                <span class="text-[9px] mt-0.5 font-semibold">96K</span>
+              </div>
+              <!-- Thumbs Down -->
+              <div class="flex flex-col items-center">
+                <span class="text-xl">👎</span>
+                <span class="text-[9px] mt-0.5 font-semibold">Dislike</span>
+              </div>
+              <!-- Comments -->
+              <div class="flex flex-col items-center">
+                <span class="text-xl">💬</span>
+                <span class="text-[9px] mt-0.5 font-semibold">241</span>
+              </div>
+              <!-- Share -->
+              <div class="flex flex-col items-center">
+                <span class="text-xl">✈️</span>
+                <span class="text-[9px] mt-0.5 font-semibold">Share</span>
+              </div>
+              <!-- Remix -->
+              <div class="flex flex-col items-center">
+                <span class="text-xl">🔄</span>
+                <span class="text-[9px] mt-0.5 font-semibold">Remix</span>
+              </div>
+              <!-- Channel Profile -->
+              <div class="h-7 w-7 rounded border border-white bg-slate-700 flex items-center justify-center mt-1">👤</div>
+            </div>
+
+            <!-- Bottom Description -->
+            <div class="overlay-bottom absolute bottom-0 left-0 right-14 p-4 bg-gradient-to-t from-black/60 via-black/20 to-transparent space-y-2">
+              <div class="flex items-center gap-2">
+                <div class="h-6 w-6 rounded-full bg-slate-700 flex items-center justify-center text-[10px]">👤</div>
+                <span class="font-bold text-xs truncate max-w-[100px]">@shorts_channel</span>
+                <span class="px-2 py-0.5 bg-red-600 rounded text-[9px] font-bold">Subscribe</span>
+              </div>
+              <div class="leading-snug opacity-95 font-normal line-clamp-2">
+                YouTube Shorts has a wider right margins overlay (right 14 columns) which can easily block right-aligned content. Keep text in the safe center!
+              </div>
+              <div class="flex items-center gap-1.5 opacity-80 text-[10px]">
+                <span>🎵</span>
+                <span class="truncate max-w-[120px]">Original Sound - shorts_channel</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Label Indicator -->
+          <div class="absolute top-2 left-2 px-2 py-1 rounded bg-black/85 text-[10px] font-black text-white tracking-widest border border-white/10 uppercase select-none pointer-events-none">
+            YT Shorts Mock
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // DOM Elements
+  const fileInput = document.getElementById('file-input') as HTMLInputElement;
+  const dropzone = document.getElementById('dropzone');
+  const mediaInfo = document.getElementById('media-info');
+  const mediaFilename = document.getElementById('media-filename');
+  const btnRemoveMedia = document.getElementById('btn-remove-media');
+  
+  // Platform frames
+  const frameTiktok = document.getElementById('frame-tiktok');
+  const frameReels = document.getElementById('frame-reels');
+  const frameShorts = document.getElementById('frame-shorts');
+  const previewGrid = document.getElementById('preview-grid');
+  
+  // Toggle switches
+  const toggleRight = document.getElementById('toggle-right-icons') as HTMLInputElement;
+  const toggleBottom = document.getElementById('toggle-bottom-caption') as HTMLInputElement;
+  const toggleTop = document.getElementById('toggle-top-nav') as HTMLInputElement;
+  const toggleGuidelines = document.getElementById('toggle-guidelines') as HTMLInputElement;
+
+  // Video Custom Controls
+  const videoControls = document.getElementById('video-controls');
+  const btnPlayPause = document.getElementById('btn-play-pause');
+  const videoScrubber = document.getElementById('video-scrubber') as HTMLInputElement;
+  const btnMute = document.getElementById('btn-mute');
+
+  // Local State
+  let loadedMediaUrl: string | null = null;
+  let loadedMediaType: 'video' | 'image' | null = null;
+  let activePlatform = 'tiktok'; // 'tiktok', 'reels', 'shorts', 'all'
+  let isPlaying = false;
+  let isMuted = true;
+
+  // Set default view setup
+  const updatePlatformView = () => {
+    const frames = [frameTiktok, frameReels, frameShorts];
+    
+    if (activePlatform === 'all') {
+      // Side-by-side mode: show all frames, align grid
+      frames.forEach(f => f?.classList.remove('hidden'));
+      previewGrid?.classList.add('lg:grid', 'lg:grid-cols-3', 'lg:max-w-none', 'w-full');
+      previewGrid?.classList.remove('justify-center');
+    } else {
+      // Single frame mode
+      previewGrid?.classList.remove('lg:grid', 'lg:grid-cols-3', 'lg:max-w-none');
+      previewGrid?.classList.add('justify-center');
+      
+      frameTiktok?.classList.toggle('hidden', activePlatform !== 'tiktok');
+      frameReels?.classList.toggle('hidden', activePlatform !== 'reels');
+      frameShorts?.classList.toggle('hidden', activePlatform !== 'shorts');
+    }
+  };
+
+  // Platform Selector button clicks
+  const platformButtons = document.querySelectorAll('#platform-selector button');
+  platformButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const platform = btn.getAttribute('data-platform') || 'tiktok';
+      activePlatform = platform;
+      
+      // Update UI classes
+      platformButtons.forEach(b => {
+        b.classList.remove('border-indigo-600', 'bg-indigo-50/50', 'dark:bg-indigo-950/20', 'text-indigo-700', 'dark:text-indigo-400', 'border-2');
+        b.classList.add('border-slate-200', 'dark:border-slate-800', 'text-slate-700', 'dark:text-slate-300');
+      });
+      
+      btn.classList.add('border-indigo-600', 'bg-indigo-50/50', 'dark:bg-indigo-950/20', 'text-indigo-700', 'dark:text-indigo-400', 'border-2');
+      btn.classList.remove('border-slate-200', 'dark:border-slate-800', 'text-slate-700', 'dark:text-slate-300');
+      
+      updatePlatformView();
+    });
+  });
+
+  // Toggle Overlays elements view
+  const updateOverlayVisibility = () => {
+    const overlaysRight = document.querySelectorAll('.overlay-right');
+    const overlaysBottom = document.querySelectorAll('.overlay-bottom');
+    const overlaysTop = document.querySelectorAll('.overlay-top');
+    const guidelines = document.querySelectorAll('.overlay-guideline');
+
+    overlaysRight.forEach(o => o.classList.toggle('hidden', !toggleRight.checked));
+    overlaysBottom.forEach(o => o.classList.toggle('hidden', !toggleBottom.checked));
+    overlaysTop.forEach(o => o.classList.toggle('hidden', !toggleTop.checked));
+    guidelines.forEach(o => o.classList.toggle('hidden', !toggleGuidelines.checked));
+  };
+
+  [toggleRight, toggleBottom, toggleTop, toggleGuidelines].forEach(checkbox => {
+    checkbox.addEventListener('change', updateOverlayVisibility);
+  });
+
+  // Media Source Handler
+  const handleMediaLoad = (file: File) => {
+    if (loadedMediaUrl) {
+      URL.revokeObjectURL(loadedMediaUrl);
+    }
+
+    loadedMediaUrl = URL.createObjectURL(file);
+    loadedMediaType = file.type.startsWith('video/') ? 'video' : 'image';
+
+    // Show filename info
+    if (mediaFilename) mediaFilename.textContent = file.name;
+    mediaInfo?.classList.remove('hidden');
+
+    const videoElements = document.querySelectorAll('.media-video') as NodeListOf<HTMLVideoElement>;
+    const imageElements = document.querySelectorAll('.media-image') as NodeListOf<HTMLImageElement>;
+    const placeholders = document.querySelectorAll('.media-placeholder') as NodeListOf<HTMLElement>;
+
+    if (loadedMediaType === 'video') {
+      videoControls?.classList.remove('hidden');
+      videoElements.forEach(video => {
+        video.src = loadedMediaUrl!;
+        video.classList.remove('hidden');
+        video.muted = isMuted;
+        video.load();
+      });
+      imageElements.forEach(img => {
+        img.src = '';
+        img.classList.add('hidden');
+      });
+    } else {
+      videoControls?.classList.add('hidden');
+      videoElements.forEach(video => {
+        video.src = '';
+        video.classList.add('hidden');
+      });
+      imageElements.forEach(img => {
+        img.src = loadedMediaUrl!;
+        img.classList.remove('hidden');
+      });
+    }
+
+    placeholders.forEach(p => p.classList.add('hidden'));
+    
+    // Auto play video when uploaded
+    if (loadedMediaType === 'video') {
+      syncVideoPlay(true);
+    }
+  };
+
+  // Sync Video playback triggers across all instances
+  const syncVideoPlay = (play: boolean) => {
+    const videoElements = document.querySelectorAll('.media-video') as NodeListOf<HTMLVideoElement>;
+    isPlaying = play;
+    
+    if (btnPlayPause) {
+      btnPlayPause.textContent = isPlaying ? '⏸' : '▶';
+    }
+
+    videoElements.forEach(video => {
+      if (video.src) {
+        if (isPlaying) {
+          video.play().catch(() => {
+            // Safe fallback if autoplay gets blocked by browser policy
+            isPlaying = false;
+            if (btnPlayPause) btnPlayPause.textContent = '▶';
+          });
+        } else {
+          video.pause();
+        }
+      }
+    });
+  };
+
+  btnPlayPause?.addEventListener('click', () => {
+    syncVideoPlay(!isPlaying);
+  });
+
+  // Synchronize timeline scrubbing
+  const videoElements = document.querySelectorAll('.media-video') as NodeListOf<HTMLVideoElement>;
+  
+  if (videoScrubber) {
+    videoScrubber.addEventListener('input', () => {
+      const pct = parseFloat(videoScrubber.value) / 100;
+      videoElements.forEach(video => {
+        if (video.src && video.duration) {
+          video.currentTime = video.duration * pct;
+        }
+      });
+    });
+
+    // Update progress bar dynamically during playback
+    // We attach timeupdate listener to the first video element
+    const primaryVideo = videoElements[0];
+    if (primaryVideo) {
+      primaryVideo.addEventListener('timeupdate', () => {
+        if (primaryVideo.duration) {
+          const val = (primaryVideo.currentTime / primaryVideo.duration) * 100;
+          videoScrubber.value = val.toString();
+        }
+      });
+    }
+  }
+
+  // Mute / Unmute handler
+  btnMute?.addEventListener('click', () => {
+    isMuted = !isMuted;
+    btnMute.textContent = isMuted ? '🔇' : '🔊';
+    videoElements.forEach(video => {
+      video.muted = isMuted;
+    });
+  });
+
+  // Dropzone & Input Listeners
+  fileInput?.addEventListener('change', (e) => {
+    const files = (e.target as HTMLInputElement).files;
+    if (files && files.length > 0) {
+      handleMediaLoad(files[0]);
+    }
+  });
+
+  // Drag and drop event triggers
+  dropzone?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropzone.classList.add('border-indigo-500', 'bg-indigo-50/20');
+  });
+
+  dropzone?.addEventListener('dragleave', () => {
+    dropzone.classList.remove('border-indigo-500', 'bg-indigo-50/20');
+  });
+
+  dropzone?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('border-indigo-500', 'bg-indigo-50/20');
+    const files = (e as DragEvent).dataTransfer?.files;
+    if (files && files.length > 0) {
+      handleMediaLoad(files[0]);
+    }
+  });
+
+  // Remove uploaded media
+  btnRemoveMedia?.addEventListener('click', () => {
+    if (loadedMediaUrl) {
+      URL.revokeObjectURL(loadedMediaUrl);
+    }
+    loadedMediaUrl = null;
+    loadedMediaType = null;
+    
+    mediaInfo?.classList.add('hidden');
+    videoControls?.classList.add('hidden');
+
+    const videoElements = document.querySelectorAll('.media-video') as NodeListOf<HTMLVideoElement>;
+    const imageElements = document.querySelectorAll('.media-image') as NodeListOf<HTMLImageElement>;
+    const placeholders = document.querySelectorAll('.media-placeholder') as NodeListOf<HTMLElement>;
+
+    videoElements.forEach(video => {
+      video.src = '';
+      video.classList.add('hidden');
+    });
+    imageElements.forEach(img => {
+      img.src = '';
+      img.classList.add('hidden');
+    });
+    placeholders.forEach(p => p.classList.remove('hidden'));
+
+    isPlaying = false;
+    if (btnPlayPause) btnPlayPause.textContent = '▶';
+  });
+
+  // Initial layouts
+  updatePlatformView();
+  updateOverlayVisibility();
+</script>
+
+<style>
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
+  }
+</style>
